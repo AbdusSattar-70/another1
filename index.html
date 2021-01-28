@@ -25,17 +25,17 @@
 
                             <div class="col-md-5 center-item">
                                 <div class="input-group number-spinner">
-                                    <button id="iPhoneMinusBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                                    <input id="iPhoneQuantity" type="text" class="form-control text-center" value="1">
-                                    <button id="iPhonePlusBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                                    <button onclick="productCalculate('iPhone', false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                                    <input id="iPhone-Quantity" type="text" class="form-control text-center" value="1">
+                                    <button onclick="productCalculate('iPhone', true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
                                 </div>
-                                <h5>$ <span id="iPhonePrice">100</span></h5>
+                                <h5>$ <span id="iPhone-Price">100</span></h5>
                                 <img id="removeItem1" src="images/remove.png" alt="" class="remove-item">
                             </div>
                         </div>
                     </div>
 
-                    <div class="cart-item">
+                    <div id="secondItem" class="cart-item">
                         <div class="row">
                             <div class="col-md-7 center-item mx-auto">
                                 <img src="images/product-2.png" alt="">
@@ -43,13 +43,13 @@
                             </div>
                             <div class="col-md-5 center-item">
                                 <div class="input-group number-spinner">
-                                    <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                                    <input type="text" class="form-control text-center" value="1">
-                                    <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                                    <button onclick="productCalculate('case', false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                                    <input id="case-Quantity" type="text" class="form-control text-center" value="1">
+                                    <button onclick="productCalculate('case', true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                                 </div>
-                                <h5>$59</h5>
-                                <img src="images/remove.png" alt="" class="remove-item">
+                                <h5>$ <span id="case-Price">59</span></h5>
+                                <img id="removeItem2" src="images/remove.png" alt="" class="remove-item">
                             </div>
                         </div>
                     </div>
@@ -64,9 +64,9 @@
                             </div>
 
                             <div class="col-md-4 status">
-                                <h5>$1,278</h5>
-                                <h5>$0</h5>
-                                <h5>$1,278</h5>
+                                <h5>$ <span id="subtotalAmount">159</span></h5>
+                                <h5>$ <span id="tax">0</span></h5>
+                                <h5>$ <span id="total">0</span></h5>
                             </div>
                         </div>
                     </div>
@@ -79,45 +79,73 @@
     </section>
     <script>
         // iPhone cart event handler
-        const iPhoneMinusBtn = document.getElementById('iPhoneMinusBtn');
-        iPhoneMinusBtn.addEventListener('click', function() {
-            const iPhoneQuantity = document.getElementById('iPhoneQuantity').value;
-            const iPhoneQuantityFloat = parseFloat(iPhoneQuantity);
-            let totalMinus = iPhoneQuantityFloat - 1;
-            if (totalMinus >= 1) {
-                document.getElementById('iPhoneQuantity').value = totalMinus;
+
+        // function priceCalculate(isIncrease) {
+        //     const iPhoneQuantity = document.getElementById('iPhoneQuantity').value;
+        //     let increaseIphoneQty = 0;
+        //     if (isIncrease == true) {
+        //         increaseIphoneQty = +iPhoneQuantity + 1;
+        //     }
+        //     if (isIncrease == false && iPhoneQuantity >= 1) {
+        //         increaseIphoneQty = +iPhoneQuantity - 1;
+        //     }
+        //     document.getElementById('iPhoneQuantity').value = increaseIphoneQty;
+        //     const iPhonePrice = increaseIphoneQty * 100;
+        //     document.getElementById('iPhonePrice').innerText = iPhonePrice;
+        // }
+
+        // case cart event handler
+
+
+        // function Calculate(isIncrease) {
+        //     const caseQuantity = document.getElementById('caseQuantity').value;
+        //     let increaseCaseQty = 0;
+        //     if (isIncrease == true) {
+        //         increaseCaseQty = +caseQuantity + 1;
+        //     }
+        //     if (isIncrease == false && caseQuantity >= 1) {
+        //         increaseCaseQty = +caseQuantity - 1;
+        //     }
+        //     document.getElementById('caseQuantity').value = increaseCaseQty;
+        //     const casePrice = increaseCaseQty * 59;
+        //     document.getElementById('casePrice').innerText = casePrice;
+        // }
+
+
+        function productCalculate(product, isIncrease) {
+            const Quantity = document.getElementById(product + '-Quantity').value;
+            let increaseQty = 0;
+            if (isIncrease == true) {
+                increaseQty = +Quantity + 1;
             }
-            const iPhonePrice = document.getElementById('iPhonePrice').innerText;
-            const iPhonePriceFloat = parseFloat(iPhonePrice);
-            let totalPrice = document.getElementById('iPhoneQuantity').value * 100;
-
-            if (totalPrice >= 100) {
-                document.getElementById('iPhonePrice').innerText = totalPrice;
+            if (isIncrease == false && Quantity >= 1) {
+                increaseQty = +Quantity - 1;
             }
-
-
-        })
-        const iPhonePlusBtn = document.getElementById('iPhonePlusBtn');
-        iPhonePlusBtn.addEventListener('click', function() {
-            const iPhoneQuantity = document.getElementById('iPhoneQuantity').value;
-            const iPhoneQuantityFloat = parseFloat(iPhoneQuantity);
-            let totalPlus = iPhoneQuantityFloat + 1;
-            document.getElementById('iPhoneQuantity').value = totalPlus;
-
-            const iPhonePrice = document.getElementById('iPhonePrice').innerText;
-            const iPhonePriceFloat = parseFloat(iPhonePrice);
-            let totalPrice = document.getElementById('iPhoneQuantity').value * 100;
-
-            if (totalPrice >= 100) {
-                document.getElementById('iPhonePrice').innerText = totalPrice;
+            document.getElementById(product + '-Quantity').value = increaseQty;
+            let totaPrice = 0;
+            if (product == 'case') {
+                totalPrice = increaseQty * 59;
             }
-        })
-        const removeItem1 = document.getElementById('removeItem1');
-        removeItem1.addEventListener('click', function() {
-            const firstItem = document.getElementById('firstItem');
-            firstItem.style.display = 'none';
+            if (product == 'iPhone') {
+                totalPrice = increaseQty * 100;
+            }
+            document.getElementById(product + '-Price').innerText = totalPrice;
+            getTotalSub();
+        }
 
-        })
+        function getTotalSub() {
+            const phoneinput = document.getElementById('iPhone-Quantity').value;
+            const phoneCount = parseInt(phoneinput);
+            const caseinput = document.getElementById('case-Quantity').value;
+            const caseCount = parseInt(caseinput);
+            const totalValue = phoneCount * 100 + caseCount * 59;
+            document.getElementById('subtotalAmount').innerText = totalValue;
+            const tax = totalValue * 0.1;
+            document.getElementById('tax').innerText = Math.round(tax);
+            const totalAll = tax + totalValue;
+            document.getElementById('total').innerText = totalAll;
+            return totalValue;
+        }
     </script>
 </body>
 
